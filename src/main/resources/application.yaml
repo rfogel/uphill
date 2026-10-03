@@ -10,12 +10,12 @@ spring:
     lazy-initialization: true
   datasource:
     hikari:
-      maximum-pool-size: 50
-      minimum-idle: 50
-      connection-timeout: 3000
-      idle-timeout: 600000
+      maximum-pool-size: 30
+      minimum-idle: 30
+      connection-timeout: 5000
+      idle-timeout: 60000
       max-lifetime: 1800000
-      leak-detection-threshold: 30000
+      leak-detection-threshold: 10000
     url: ${DATABASE_CONN_STRING:jdbc:postgresql://localhost:5433/appointment}
     username: ${DATABASE_USERNAME:appointment_user}
     password: ${DATABASE_PASSWORD:appointment_password}
