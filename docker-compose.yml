@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:18.6-alpine3.24
+    container_name: app_api_db
+    restart: unless-stopped
+    environment:
+      - "POSTGRES_USER=root"
+      - "POSTGRES_PASSWORD=root"
+    volumes:
+      - ./snapshot/bootstrap.sql:/docker-entrypoint-initdb.d/create_database.sql
+    ports:
+      - "5433:5432"
+  kafka:
+    image: apache/kafka
+    container_name: app_api_kafka
+    restart: unless-stopped
+    ports:
+      - "9092:9092"

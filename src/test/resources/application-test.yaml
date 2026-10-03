@@ -1,0 +1,47 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
+  jackson:
+    default-property-inclusion: non_null
+    mapper.ACCEPT_CASE_INSENSITIVE_ENUMS: true
+  main:
+    banner-mode: "off"
+    lazy-initialization: true
+  datasource:
+    hikari:
+      maximum-pool-size: 100
+      minimum-idle: 10
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+  jpa:
+    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  kafka:
+    topic:
+      partition-count: 1
+      medic_reservation: medic_reservations
+      room_reservation: room_reservations
+      email_notification: email_notifications
+    consumer:
+      group-id: post-appointment-test-consumer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+
+integration:
+  mock:
+    enabled: true
+  api:
+    base-url: http://localhost:8081
+  email:
+    from: no-reply@example.com
+    recipient: patient@example.com
+

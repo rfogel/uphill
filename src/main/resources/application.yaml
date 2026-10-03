@@ -1,0 +1,63 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
+  jackson:
+    default-property-inclusion: non_null
+    mapper.ACCEPT_CASE_INSENSITIVE_ENUMS: true
+  main:
+    banner-mode: "off"
+    lazy-initialization: true
+  datasource:
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 50
+      connection-timeout: 3000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 30000
+    url: ${DATABASE_CONN_STRING:jdbc:postgresql://localhost:5433/appointment}
+    username: ${DATABASE_USERNAME:appointment_user}
+    password: ${DATABASE_PASSWORD:appointment_password}
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: ${spring.jpa.show-sql:false}
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    topic:
+      partition-count: ${KAFKA_TOPIC_PARTITION_COUNT:3}
+      medic_reservation: ${KAFKA_TOPIC_MEDIC_RESERVATION:medic_reservations}
+      room_reservation: ${KAFKA_TOPIC_ROOM_RESERVATION:room_reservations}
+      email_notification: ${KAFKA_TOPIC_EMAIL_NOTIFICATION:email_notifications}
+    bootstrap-servers: ${KAFKA_HOST:localhost:9092}
+    producer:
+      acks: all
+      properties:
+        enable.idempotence: true
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:appointment-consumer-group}
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+    listener:
+      concurrency: ${spring.kafka.topic.partition-count}
+
+integration:
+  mock:
+    enabled: ${INTEGRATION_MOCK_ENABLED:true}
+  api:
+    base-url: ${INTEGRATION_API_BASE_URL:http://localhost:8081}
+  email:
+    from: ${INTEGRATION_EMAIL_FROM:no-reply@example.com}
+    recipient: ${INTEGRATION_EMAIL_RECIPIENT:patient@example.com}
+
+server:
+  compression:
+    enabled: true
+    mime-types: application/json,application/json;charset=utf-8
+    min-response-size: 10240
+  error:
+    include-stacktrace: never
+  servlet.context-path: /
+  port: 9090
