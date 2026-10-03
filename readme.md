@@ -1,11 +1,11 @@
 # Appointment API
 
-This project was built using java 25 with SpringBoot 4 and maven 3.8. It starts an embedded server on port 9090.
+This project was built using java 25 with SpringBoot 4 and maven >=3.8. It starts an embedded server on port 9090.
 
 ### Requirements
 - Java 25
 - Maven 3.8 or higher
-- Docker
+- Docker (for running Postgres and Kafka locally)
 
 ### Building the project
 ```shell
@@ -17,9 +17,9 @@ mvn clean package
 mvn test
 ```
 
-### Running the application
+### Running the application locally
 
-First, start the containerized Postgres and Kafka instances using Docker Compose. bootstrap.sql will create the database, tables and populate them with sample data
+First, start the containerized Postgres and Kafka instances using Docker Compose. "bootstrap.sql" will create the database, tables and populate them with sample data
 ```shell
 docker-compose up -d
 ```

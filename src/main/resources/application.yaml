@@ -21,10 +21,10 @@ spring:
     password: ${DATABASE_PASSWORD:appointment_password}
   jpa:
     show-sql: false
+    open-in-view: true
     properties:
       hibernate:
         format_sql: ${spring.jpa.show-sql:false}
-        dialect: org.hibernate.dialect.PostgreSQLDialect
   kafka:
     topic:
       partition-count: ${KAFKA_TOPIC_PARTITION_COUNT:3}
@@ -61,3 +61,23 @@ server:
     include-stacktrace: never
   servlet.context-path: /
   port: 9090
+
+management:
+  info:
+    env:
+      enabled: true
+  server:
+    port: 9099
+    ssl.enabled: false
+  endpoint:
+    health:
+      group.liveness.include: broker
+      show-details: always
+      probes:
+        enabled: true
+    loggers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info, env, metrics, health, loggers
